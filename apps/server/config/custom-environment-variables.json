@@ -1,0 +1,21 @@
+{
+  "mongodb": {
+    "userName": "MONGO_USER",
+    "password": "MONGO_PASSWORD",
+    "name": "MONGO_INITDB_DATABASE"
+  },
+  "redis": {
+    "url": "REDIS_URL",
+    "encryptionKey": "REDIS_ENCRYPTION_KEY"
+  },
+  "mailer": {
+    "email": "EMAIL_SENDER",
+    "password": "EMAIL_PASSWORD"
+  },
+  "jwt": {
+    "accessKey": "JWT_ACCESS_KEY",
+    "refreshKey": "JWT_REFRESH_KEY",
+    "accessTokenExpiration": "JWT_ACCESS_TOKEN_EXPIRATION",
+    "refreshTokenExpiration": "JWT_REFRESH_TOKEN_EXPIRATION"
+  }
+}

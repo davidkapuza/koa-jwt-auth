@@ -1,5 +1,5 @@
 {
-  "name": "with-docker",
+  "name": "koa-jwt-auth",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -9,13 +9,16 @@
   "scripts": {
     "build": "turbo run build",
     "clean": "turbo run clean",
-    "dev": "turbo run dev",
+    "dev": "dotenv -- turbo run dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo run lint",
     "test": "turbo run test"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mongoose": "^7.1.0"
+  },
   "devDependencies": {
+    "dotenv-cli": "latest",
     "eslint-config-custom": "*",
     "prettier": "latest",
     "turbo": "latest"
