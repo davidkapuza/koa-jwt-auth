@@ -4,16 +4,16 @@ import Koa, { Next } from "koa";
 
 export default () => (ctx: Koa.Context, next: Next) => {
   try {
-    const authorizationHeader = ctx.header.authorization;
-    if (!authorizationHeader) {
+    const accessTokenHeader = ctx.header.authorization;
+    const refreshToken = ctx.cookies.get("refreshToken");
+    if (!accessTokenHeader || !refreshToken) {
       throw ApiError.UnauthorizedError();
     }
-    const accessToken = authorizationHeader.split(" ")[1];
+    const accessToken = accessTokenHeader.split(" ")[1];
     if (!accessToken) {
       throw ApiError.UnauthorizedError();
     }
     const userData = TokenService.validateAccessToken(accessToken);
-
     if (!userData) {
       throw ApiError.UnauthorizedError();
     }

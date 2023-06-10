@@ -11,7 +11,6 @@ import { Roles } from "common/types";
 @index({ email: 1 })
 @pre<User>("save", async function () {
   if (!this.isModified("password")) return;
-  console.log("hashing password...", this.password);
   this.password = await bcrypt.hash(this.password, 10);
 })
 @modelOptions({

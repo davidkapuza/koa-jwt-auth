@@ -39,7 +39,7 @@ export class AuthController {
     ctx.status = 200;
   }
   public static async refresh(ctx: Koa.Context) {
-    const refreshToken = ctx.cookies.get("refreshToken")!;
+    const refreshToken = ctx.cookies.get("refreshToken");
     const userData = await AuthService.refresh(refreshToken);
     ctx.cookies.set("refreshToken", userData.refreshToken, {
       httpOnly: true,

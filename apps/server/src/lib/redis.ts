@@ -17,7 +17,6 @@ export default class Redis {
     try {
       return await this.client.get(key);
     } catch (error) {
-      console.log(error);
       throw new Error("Error occured while getting data...");
     }
   }

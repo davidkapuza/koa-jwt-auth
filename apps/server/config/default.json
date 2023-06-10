@@ -1,5 +1,9 @@
 {
   "port": 8000,
   "serverHost": "http://localhost:8000",
-  "clientHost": "http://localhost:3000"
+  "clientHost": "http://localhost:3000",
+  "jwt": {
+    "accessTokenExpiration": 1800000,
+    "refreshTokenExpiration": 2592000000
+  }
 }

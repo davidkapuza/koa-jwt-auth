@@ -101,7 +101,7 @@ export default class AuthService {
     await TokenService.removeToken(refreshToken);
   }
 
-  public static async refresh(refreshToken: string) {
+  public static async refresh(refreshToken?: string) {
     if (!refreshToken) {
       throw ApiError.UnauthorizedError();
     }

@@ -1,8 +1,10 @@
+import UserDto from "../dto/user.dto";
 import userModel from "../model/user.model";
 
 export default class UserService {
-  public static async getAllUsers() {
-    const users = await userModel.find();
-    return users;
+  public static async getSelf(id: string) {
+    const userFromDb = await userModel.findById(id);
+    const user = new UserDto(userFromDb!);
+    return user;
   }
 }

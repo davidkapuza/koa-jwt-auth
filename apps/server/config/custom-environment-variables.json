@@ -14,8 +14,6 @@
   },
   "jwt": {
     "accessKey": "JWT_ACCESS_KEY",
-    "refreshKey": "JWT_REFRESH_KEY",
-    "accessTokenExpiration": "JWT_ACCESS_TOKEN_EXPIRATION",
-    "refreshTokenExpiration": "JWT_REFRESH_TOKEN_EXPIRATION"
+    "refreshKey": "JWT_REFRESH_KEY"
   }
 }

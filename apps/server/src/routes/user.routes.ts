@@ -6,6 +6,6 @@ const userRouter = new Router({
   prefix: "/api",
 });
 
-userRouter.get("/users", requireAuth(), UserController.getUsers);
+userRouter.get("/me", requireAuth(), UserController.getSelf);
 
 export default userRouter;
