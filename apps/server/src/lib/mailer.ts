@@ -1,4 +1,3 @@
-import config from "config";
 import nodemailer, { Transporter } from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 import logger from "./logger";
@@ -13,7 +12,7 @@ export default class Mailer {
     html: string
   ) {
     await this._transporter.sendMail({
-      from: config.get<string>("mailer.email"),
+      from: process.env.EMAIL_SENDER,
       to,
       subject,
       text,
@@ -25,8 +24,8 @@ export default class Mailer {
     this._transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: config.get<string>("mailer.email"),
-        pass: config.get<string>("mailer.password"),
+        user: process.env.EMAIL_SENDER,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 

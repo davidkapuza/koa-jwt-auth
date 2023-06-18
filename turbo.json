@@ -1,18 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "globalEnv": [
-    "MONGO_INITDB_ROOT_USERNAME",
-    "MONGO_INITDB_ROOT_PASSWORD",
-    "MONGO_INITDB_DATABASE",
-    "MONGO_USER",
-    "MONGO_PASSWORD"
-  ],
+  "globalDependencies": [".env"],
   "pipeline": {
     "build": {
       "outputs": ["dist/**", ".next/**", "!.next/cache/**", "public/dist/**"],
-      "dependsOn": ["^build"],
-      "env": ["NEXT_PUBLIC_API_HOST"]
+      "dependsOn": ["^build"]
     },
     "test": {
       "outputs": ["coverage/**"],

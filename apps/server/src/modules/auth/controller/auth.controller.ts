@@ -1,4 +1,3 @@
-import config from "config";
 import Koa from "koa";
 import { activateInput } from "../schemas/activate.schema";
 import { signInInput } from "../schemas/signin.schema";
@@ -18,17 +17,17 @@ export class AuthController {
     const userData = await AuthService.activate(query);
     ctx.cookies.set("refreshToken", userData.refreshToken, {
       httpOnly: true,
-      maxAge: config.get("jwt.refreshTokenExpiration"),
+      maxAge: parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRATION!),
     });
     ctx.body = userData;
-    ctx.response.redirect(config.get("clientHost"));
+    ctx.response.redirect(process.env.CLIENT_HOST!);
   }
   public static async signin(ctx: Koa.Context) {
     const input = ctx.request.body as signInInput;
     const userData = await AuthService.signin(input);
     ctx.cookies.set("refreshToken", userData.refreshToken, {
       httpOnly: true,
-      maxAge: config.get("jwt.refreshTokenExpiration"),
+      maxAge: parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRATION!),
     });
     ctx.body = userData;
   }
@@ -43,7 +42,7 @@ export class AuthController {
     const userData = await AuthService.refresh(refreshToken);
     ctx.cookies.set("refreshToken", userData.refreshToken, {
       httpOnly: true,
-      maxAge: config.get("jwt.refreshTokenExpiration"),
+      maxAge: parseInt(process.env.JWT_REFRESH_TOKEN_EXPIRATION!),
     });
     ctx.body = userData;
   }

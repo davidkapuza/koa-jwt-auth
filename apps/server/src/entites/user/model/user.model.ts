@@ -28,7 +28,7 @@ export class User {
     maxLength: 32,
   })
   password: string;
-  @prop({ type: Array, default: [Roles.User] }) roles: string[];
+  @prop({ type: Array, default: [Roles.User], allowMixed: 0 }) roles: string[];
 
   async comparePasswords(candidatePassword: string, hashedPassword: string) {
     return await bcrypt.compare(candidatePassword, hashedPassword);

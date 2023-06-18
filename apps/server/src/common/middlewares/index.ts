@@ -1,5 +1,4 @@
 import cors from "@koa/cors";
-import config from "config";
 import Koa from "koa";
 import bodyParser from "koa-bodyparser";
 import cookieParser from "koa-cookie";
@@ -19,7 +18,7 @@ export default function (app: Koa) {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: config.get("serverHost"),
+      origin: process.env.SERVER_HOST,
       credentials: true,
     })
   );

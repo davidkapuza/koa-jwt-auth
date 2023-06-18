@@ -1,21 +1,19 @@
+import { randomBytes } from "crypto";
+import ejs from "ejs";
+import path from "path";
 import ApiError from "common/errors/api.error";
 import { Roles } from "common/types";
 import { buildUrl } from "common/utils/buildUrl";
 import { decrypt } from "common/utils/decrypt";
 import { encrypt } from "common/utils/encrypt";
-import config from "config";
-import { randomBytes } from "crypto";
-import ejs from "ejs";
 import TokenService from "entites/token/services/token.service";
 import UserDto from "entites/user/dto/user.dto";
 import userModel from "entites/user/model/user.model";
 import Mailer from "lib/mailer";
 import Redis from "lib/redis";
-import path from "path";
 import { activateInput } from "../schemas/activate.schema";
 import { signInInput } from "../schemas/signin.schema";
 import { signUpInput } from "../schemas/signup.schema";
-
 export default class AuthService {
   public static async signup({ name, email, password }: signUpInput) {
     const candidate = await userModel.findOne({ email });
@@ -37,19 +35,16 @@ export default class AuthService {
 
     const key = randomBytes(16).toString("hex").slice(0, 32);
     const confirmationLink = buildUrl(
-      config.get("serverHost"),
+      process.env.SERVER_HOST!,
       "/api/activate",
       { email, key }
     );
     const encryptedData = encrypt("aes-256-ctr", key, user);
-    const template = await ejs.renderFile(
-      path.join(__dirname, "../templates/confirm-email.ejs"),
-      {
-        userName: name,
-        confirmationLink,
-        sender: config.get("mailer.email"),
-      }
-    );
+    const template = await ejs.renderFile(path.join(__dirname, "../../../views/confirm-email.ejs"), {
+      userName: name,
+      confirmationLink,
+      sender: process.env.EMAIL_SENDER,
+    });
     await Mailer.sendMail(email, "Activation link", "", template);
     await Redis.set(email, encryptedData);
   }

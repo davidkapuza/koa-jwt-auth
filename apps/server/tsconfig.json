@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ESNext"],
-    "moduleResolution": "NodeNext",
+    "target": "ESNext",
+    "lib": ["ES2015"],
+    "moduleResolution": "node",
     "module": "CommonJS",
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "paths": {
-      "@/middlewares/*": ["shared/middlewares/*"],
-      "@/models/*": ["shared/models/*"]
-    }
+
   },
   "exclude": ["node_modules"],
   "extends": "tsconfig/base.json",
-  "include": ["./src/**/*"]
+  "include": ["src"]
 }

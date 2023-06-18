@@ -1,17 +1,16 @@
-import { TUser } from "common/types";
-import config from "config";
-import UserDto from "entites/user/dto/user.dto";
 import { sign, verify } from "jsonwebtoken";
 import { Types } from "mongoose";
+import { TUser } from "common/types";
+import UserDto from "entites/user/dto/user.dto";
 import tokenModel from "../model/token.model";
 
 export default class TokenService {
   public static generateTokens(payload: TUser) {
-    const accessToken = sign(payload, config.get("jwt.accessKey"), {
-      expiresIn: config.get("jwt.accessTokenExpiration"),
+    const accessToken = sign(payload, process.env.JWT_ACCESS_KEY!, {
+      expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRATION,
     });
-    const refreshToken = sign(payload, config.get("jwt.refreshKey"), {
-      expiresIn: config.get("jwt.refreshTokenExpiration"),
+    const refreshToken = sign(payload, process.env.JWT_REFRESH_KEY!, {
+      expiresIn: process.env.JWT_REFRESH_TOKEN_EXPIRATION,
     });
 
     return { accessToken, refreshToken };
@@ -30,7 +29,7 @@ export default class TokenService {
   }
   public static validateAccessToken(accessToken: string) {
     try {
-      const userData = verify(accessToken, config.get("jwt.accessKey"));
+      const userData = verify(accessToken, process.env.JWT_ACCESS_KEY!);
       return userData;
     } catch (error) {
       return null;
@@ -40,7 +39,7 @@ export default class TokenService {
     try {
       const userData = verify(
         refreshToken,
-        config.get("jwt.refreshKey")
+        process.env.JWT_REFRESH_KEY!
       ) as UserDto;
       return userData;
     } catch (error) {

@@ -1,13 +1,8 @@
 import mongoose from "mongoose";
-import config from "config";
 import logger from "lib/logger";
 
 export default class MongoDB {
-  private static connectURL = `mongodb://${config.get(
-    "mongodb.userName"
-  )}:${config.get("mongodb.password")}@localhost:6000/${config.get(
-    "mongodb.name"
-  )}`;
+  private static connectURL = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@mongo:27017/${process.env.MONGO_INITDB_DATABASE}`;
 
   public static async connect() {
     await mongoose

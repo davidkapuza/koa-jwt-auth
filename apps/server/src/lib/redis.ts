@@ -1,10 +1,9 @@
 import { RedisClientType, createClient } from "redis";
 import logger from "./logger";
-import config from "config";
 
 export default class Redis {
   public static client: RedisClientType = createClient({
-    url: config.get<string>("redis.url"),
+    url: process.env.REDIS_URL,
   });
 
   public static async connect() {

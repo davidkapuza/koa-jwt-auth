@@ -1,22 +1,24 @@
 version: "3"
 
 services:
-  web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - app_network
+  # web:
+  #   container_name: web
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/web/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   networks:
+  #     - app_network
   server:
     container_name: server
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile
     restart: always
+    env_file:
+      - .env
     ports:
       - 8000:8000
     networks:
@@ -33,6 +35,8 @@ services:
       MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     env_file:
       - .env
+    networks:
+      - app_network
     volumes:
       - ./data/mongo:/data/db
       - ./scripts/docker/mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
@@ -41,6 +45,8 @@ services:
   redis:
     image: redis:latest
     container_name: redis
+    networks:
+      - app_network
     ports:
       - '6379:6379'
     volumes:
