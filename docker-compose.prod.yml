@@ -1,5 +1,5 @@
 version: '3.0'
-name: turbo-docker-monorepo-dev
+name: turbo-docker-monorepo-prod
 
 x-defaults:
   &defaults
@@ -13,18 +13,22 @@ services:
     <<: *defaults
     ports:
       - 8000:8000
-    command: yarn workspace server start:dev
+    command: yarn workspace server start:prod
     env_file:
       - .env
+    environment:
+      - PORT=8000
+      - IN_CONTAINER=1
+      - NODE_ENV=production
     build:
       args:
         APP: server
-        START_COMMAND: start:dev
+        START_COMMAND: start:prod
       context: .
-      dockerfile: ./dockerfiles/Dockerfile.dev
-    volumes:
-      - ./apps/server:/app/apps/server
-      - /app/apps/server/node_modules
+      dockerfile: ./dockerfiles/Dockerfile.node.prod
+    depends_on:
+      - mongo
+      - redis
   mongo:
     <<: *defaults
     image: mongo:latest
