@@ -9,6 +9,25 @@ x-defaults:
     - app_network
 
 services:
+  client:
+    <<: *defaults
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
+    command: yarn workspace client dev
+    environment:
+      - PORT=3000
+    build:
+      args:
+        APP: client
+        START_COMMAND: dev
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.dev
+    volumes:
+      - ./apps/client:/app/apps/client
+      - /app/apps/client/node_modules
+      - /app/apps/client/.next
   server:
     <<: *defaults
     ports:
@@ -51,6 +70,7 @@ services:
 volumes:
   mongo:
   redis:
+
 
 networks:
   app_network:

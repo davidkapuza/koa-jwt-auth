@@ -18,7 +18,7 @@ export default function (app: Koa) {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: process.env.SERVER_HOST,
+      origin: process.env.CLIENT_HOST,
       credentials: true,
     })
   );
