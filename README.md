@@ -1,4 +1,4 @@
-# JWT Authentication with Koajs & Next
+# JWT Authentication
 
 > **Warning**
 > Work in progress...

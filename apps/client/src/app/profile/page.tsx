@@ -1,9 +1,15 @@
-import React from 'react'
+"use client"
+import React from "react";
+import api from "../../shared/api";
+import Navbar from "../../widgets/ui/navbar/Navbar";
 
 function Profile() {
+
   return (
-    <div>Profile</div>
-  )
+    <div>
+      <Navbar/>
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;

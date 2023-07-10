@@ -18,6 +18,8 @@ services:
     command: yarn workspace client dev
     environment:
       - PORT=3000
+    env_file:
+    - .env
     build:
       args:
         APP: client

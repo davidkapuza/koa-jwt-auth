@@ -7,6 +7,7 @@
     "prebuild": "ts-node tools/copy-assets.ts",
     "build": "tsc",
     "start:dev": "ts-node-dev --project ./tsconfig.json --require tsconfig-paths/register ./src/index.ts",
+    "dev": "ts-node-dev --project ./tsconfig.json --require tsconfig-paths/register ./src/index.ts",
     "start:prod": "ts-node -r tsconfig-paths/register src/index.ts",
     "lint": "tsc --noEmit && eslint \"src/**/*.ts*\"",
     "test": "jest --detectOpenHandles"
