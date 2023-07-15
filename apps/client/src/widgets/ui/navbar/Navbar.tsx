@@ -2,13 +2,16 @@
 
 import Image from "next/image";
 import api from "../../../shared/api";
+import { useRouter } from "next/navigation";
 
 function Navbar() {
+  const router = useRouter()
   const handleLogout = async () => {
     await api.post("/api/signout");
+    router.push("/signin")
   };
   return (
-    <div className="navbar bg-base-100 justify-end">
+    <div className="justify-end navbar bg-base-100">
       <div className="dropdown dropdown-end">
         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
           <div className="w-10 rounded-full">

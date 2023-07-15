@@ -4,6 +4,7 @@ import api from "../../../shared/api";
 import { AuthResponse } from "../../../shared/types";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type SignUpForm = {
   name: string;
@@ -19,6 +20,8 @@ const defaultValues = {
 };
 
 function SignUp() {
+  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<SignUpForm>(defaultValues);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +32,13 @@ function SignUp() {
   };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await api.post<AuthResponse>("api/signup", formData);
       localStorage.setItem("accessToken", response.data.accessToken);
+      if (response?.status === 200) {
+        router.push('/profile')
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(error.message, {
@@ -41,6 +48,7 @@ function SignUp() {
         console.error("Unexpected error", error);
       }
     }
+    setIsLoading(false);
   };
 
   return (
@@ -55,7 +63,7 @@ function SignUp() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100"
+        className="flex-shrink-0 w-full max-w-sm shadow-2xl card bg-base-100"
       >
         <div className="card-body">
           <div className="form-control">
@@ -110,9 +118,19 @@ function SignUp() {
               className="input input-bordered"
             />
           </div>
-          <div className="form-control mt-6">
-            <button className="btn btn-primary">Sign up</button>
+          <div className="mt-6 form-control">
+            <button className="btn btn-primary">
+              <span className={isLoading ? "loading loading-spinner" : ""}>
+                Sign up
+              </span>
+            </button>
           </div>
+          <small className="label-text-alt">
+            Already have account?{" "}
+            <a href="/signin" className="font-semibold link link-hover">
+              Sign in
+            </a>
+          </small>
         </div>
       </form>
     </>
