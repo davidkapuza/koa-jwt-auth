@@ -12,10 +12,12 @@ services:
   client:
     <<: *defaults
     depends_on:
-      - backend
+      - server
     ports:
       - "3000:3000"
-    command: yarn workspace client start
+    command: yarn workspace client server
+    env_file:
+      - .env
     environment:
       - PORT=3000
       - NODE_ENV=production
